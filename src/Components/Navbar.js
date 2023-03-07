@@ -23,6 +23,13 @@ export class Navbar extends Component {
                             <li className="nav-item">
                                 <a className="nav-link" href="/about">About</a>
                             </li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Business</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Entertainment</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> General</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Health</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Science</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Sports</a></li>
+                            <li className="nav-item"> <a href="#" className="nav-link"> Technology</a></li>
                         </ul>
                     </div>
                 </nav>
