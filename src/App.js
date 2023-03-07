@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export default class App extends Component {
   render() {
     return (
-      <>
         <Router>
           <Navbar />
           <Routes>
@@ -21,7 +20,6 @@ export default class App extends Component {
             <Route exact path="/technology" element={<News key='technology' category='technology' />} />
           </Routes>
         </Router>
-      </>
     )
   }
 }
