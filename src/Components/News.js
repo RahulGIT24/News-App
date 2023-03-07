@@ -96,7 +96,7 @@ export class News extends Component {
                 <div className="row my-5" >
                     {this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
-                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} /> : ""}
+                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} author={element.author} date={element.publishedAt.replace(/T|Z/g," ")}/> : ""}
                         </div>
                     })}
                 </div>
