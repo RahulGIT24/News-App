@@ -8,7 +8,7 @@ export class News extends Component {
     static defaultProps = {
         country: 'in',
         category: 'general',
-        pageSize: 9,
+        pageSize: 15,
     }
     static propTypes = {
         country: PropTypes.string,
@@ -25,10 +25,10 @@ export class News extends Component {
         }
     }
 
-    async componentDidMount() {
+    async updateNews(pageNo) {
         try {
             this.setState({ loader: true, error: false })
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e8bd2cfb500431f92d7253136ce7424&page=1&pageSize=${this.props.pageSize}`
+            const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e8bd2cfb500431f92d7253136ce7424&page=${pageNo}&pageSize=${this.props.pageSize}`
             const res = await fetch(url);
             const data = await res.json();
             this.setState({
@@ -43,48 +43,20 @@ export class News extends Component {
         }
     }
 
-    handlePrevious = async () => {
-        try {
-            this.setState({ loader: true, error: false })
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e8bd2cfb500431f92d7253136ce7424&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-            const res = await fetch(url);
-            const data = await res.json();
-            this.setState(
-                {
-                    articles: data.articles,
-                    page: this.state.page - 1,
-                    loader: false
-                }
-            )
+    async componentDidMount() {
+        this.updateNews(1);
+    }
 
-        }
-        catch (e) {
-            this.setState({ error: true, loader: false })
-            console.log(new Error("Unable to fetch news"));
-        }
+    handlePrevious = async () => {
+        this.setState({ page: this.state.page - 1 });
+        let pageNO = this.state.page - 1;
+        this.updateNews(pageNO);
     }
 
     handleNext = async () => {
-        try {
-            if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
-                this.setState({ loader: true, error: false })
-                let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e8bd2cfb500431f92d7253136ce7424&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-                const res = await fetch(url);
-                const data = await res.json();
-                this.setState(
-                    {
-                        articles: data.articles,
-                        page: this.state.page + 1,
-                        loader: false
-                    }
-                )
-
-            }
-        }
-        catch (e) {
-            this.setState({ error: true, loader: false })
-            console.log(new Error("Unable to fetch news"));
-        }
+        this.setState({ page: this.state.page + 1 });
+        let pageNO = this.state.page + 1;
+        this.updateNews(pageNO);
     }
 
     render() {
@@ -96,13 +68,13 @@ export class News extends Component {
                 <div className="row my-5" >
                     {this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
-                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} author={element.author} date={element.publishedAt.replace(/T|Z/g, " ")} /> : ""}
+                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} author={element.author} date={element.publishedAt.replace(/T|Z/g, " ")} source={element.source.name} /> : ""}
                         </div>
                     })}
                 </div>
                 {this.state.error == false ? <div className="container d-flex justify-content-between">
                     <button type="button" disabled={this.state.page <= 1} className="btn btn-primary" onClick={this.handlePrevious}>&larr; Previous</button>
-                    <button type="button" id='nextBTN' disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 6)} className="btn btn-primary" onClick={this.handleNext}>Next &rarr;</button>
+                    <button type="button" id='nextBTN' disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} className="btn btn-primary" onClick={this.handleNext}>Next &rarr;</button>
                 </div> : ""}
             </div>
         )
