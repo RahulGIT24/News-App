@@ -69,7 +69,7 @@ export class News extends Component {
             <div className='container my-3'>
                 <h2 className='text-center'>News Monkey Top {this.capitalizeFirstLetter(this.props.category)} Headliness</h2>
                 {this.state.error && <Error mode={this.props.mode} />}
-                {this.state.loader && <Spinner />}
+                {this.state.loader && <Spinner mode={this.props.mode}/>}
                 <div className="row my-5" >
                     {this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
