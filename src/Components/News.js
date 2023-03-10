@@ -15,7 +15,7 @@ export class News extends Component {
         category: PropTypes.string,
         pageSize: PropTypes.number,
     }
-    capitalizeFirstLetter = (string)=> {
+    capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     constructor(props) {
@@ -28,7 +28,7 @@ export class News extends Component {
         }
         document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`
     }
-    
+
     async updateNews(pageNo) {
         try {
             this.setState({ loader: true, error: false })
@@ -68,18 +68,18 @@ export class News extends Component {
         return (
             <div className='container my-3'>
                 <h2 className='text-center'>News Monkey Top {this.capitalizeFirstLetter(this.props.category)} Headliness</h2>
-                {this.state.error && <Error />}
+                {this.state.error && <Error mode={this.props.mode} />}
                 {this.state.loader && <Spinner />}
                 <div className="row my-5" >
                     {this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
-                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} author={element.author} date={element.publishedAt.replace(/T|Z/g, " ")} source={element.source.name} /> : ""}
+                            {this.state.error == false && this.state.loader == false ? <NewsItem title={element.title} description={element.description} mode={this.props.mode} imageUrl={element.urlToImage != null ? element.urlToImage : "./logo.jpg"} newsUrl={element.url} author={element.author} date={element.publishedAt.replace(/T|Z/g, " ")} source={element.source.name} /> : ""}
                         </div>
                     })}
                 </div>
                 {this.state.error == false ? <div className="container d-flex justify-content-between">
-                    <button type="button" disabled={this.state.page <= 1} className="btn btn-primary" onClick={this.handlePrevious}>&larr; Previous</button>
-                    <button type="button" id='nextBTN' disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} className="btn btn-primary" onClick={this.handleNext}>Next &rarr;</button>
+                    <button type="button" disabled={this.state.page <= 1} className={`btn btn-${this.props.mode == 'light' ? 'dark' : 'light'} bg-${this.props.mode == 'light' ? 'light' : 'dark'} text-${this.props.mode == 'light' ? 'dark' : 'light'}`} onClick={this.handlePrevious}>&larr; Previous</button>
+                    <button type="button" id='nextBTN' disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} className={`btn btn-${this.props.mode == 'light' ? 'dark' : 'light'} bg-${this.props.mode == 'light' ? 'light' : 'dark'} text-${this.props.mode == 'light' ? 'dark' : 'light'}`} onClick={this.handleNext}>Next &rarr;</button>
                 </div> : ""}
             </div>
         )
