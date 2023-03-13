@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import Navbar from './Components/Navbar'
 import News from './Components/News'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoadingBar from 'react-top-loading-bar'
 
 //* Class based component
+const mystyle = {
+  color: "white",
+  backgroundColor: "#212529",
+};
 export default class App extends Component {
   pageSize = 15;
   constructor(props) {
@@ -27,19 +32,30 @@ export default class App extends Component {
       document.body.style.color = '#212529'
     }
   }
+  state = {
+    progress: 0
+  }
+  setProgress = (progress)=>{
+    this.setState({ progress: progress })
+  }
   render() {
     return (
       <Router>
         <Navbar toogleBtn={this.toogleBtn} mode={this.state.mode} />
+        <LoadingBar
+          color='#f11946'
+          height={3}
+          progress={this.state.progress}
+        />
         <Routes>
-          <Route exact path="/" element={<News key="home" pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/sports" element={<News key='sports' category='sports' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/business" element={<News key='business' category='business' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/entertainment" element={<News key='entertainment' category='entertainment' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/general" element={<News key='general' category='general' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/health" element={<News key='health' category='health' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/science" element={<News key='science' category='science' pageSize={this.pageSize} mode={this.state.mode} />} />
-          <Route exact path="/technology" element={<News key='technology' category='technology' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/" element={<News setProgress={this.setProgress} key="home" pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/sports" element={<News setProgress={this.setProgress} key='sports' category='sports' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/business" element={<News setProgress={this.setProgress} key='business' category='business' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/entertainment" element={<News setProgress={this.setProgress} key='entertainment' category='entertainment' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/general" element={<News setProgress={this.setProgress} key='general' category='general' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/health" element={<News setProgress={this.setProgress} key='health' category='health' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/science" element={<News setProgress={this.setProgress} key='science' category='science' pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/technology" element={<News setProgress={this.setProgress} key='technology' category='technology' pageSize={this.pageSize} mode={this.state.mode} />} />
         </Routes>
       </Router>
     )

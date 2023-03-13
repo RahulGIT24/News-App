@@ -31,8 +31,10 @@ export class News extends Component {
 
     async updateNews(pageNo) {
         try {
+            this.props.setProgress(0)
             this.setState({ loader: true, error: false })
             const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=4e8bd2cfb500431f92d7253136ce7424&page=${pageNo}&pageSize=${this.props.pageSize}`
+            this.props.setProgress(50)
             const res = await fetch(url);
             const data = await res.json();
             this.setState({
@@ -40,10 +42,13 @@ export class News extends Component {
                 totalResults: data.totalResults,
                 loader: false
             });
+            this.props.setProgress(100)
         }
         catch (e) {
+            this.props.setProgress(0)
             this.setState({ error: true, loader: false })
             console.log(new Error("Fail to fetch news"));
+            this.props.setProgress(100)
         }
     }
 
@@ -69,7 +74,7 @@ export class News extends Component {
             <div className='container my-3'>
                 <h2 className='text-center'>News Monkey Top {this.capitalizeFirstLetter(this.props.category)} Headliness</h2>
                 {this.state.error && <Error mode={this.props.mode} />}
-                {this.state.loader && <Spinner mode={this.props.mode}/>}
+                {this.state.loader && <Spinner mode={this.props.mode} />}
                 <div className="row my-5" >
                     {this.state.articles.map((element) => {
                         return <div className="col-md-4" key={element.url}>
