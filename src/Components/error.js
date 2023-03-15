@@ -8,7 +8,7 @@ export default class error extends Component {
         let mode = this.props;
         return (
             <div className='container'>
-                <img src={errorImg} alt="error-image" className='my-3' />
+                <img src={errorImg} alt="error-image" />
                 <h1 className='my-5'><b><i>Error</i></b> occured while fetching news</h1>
                 <p>Try:</p>
                 <li>Checking the connection</li>

@@ -72,7 +72,7 @@ export class News extends Component {
     render() {
         return (
             <div className='container'>
-                <h2 className='text-center' style={{marginTop: "90px"}}>News Monkey Top {this.capitalizeFirstLetter(this.props.category)} Headliness</h2>
+                <h2 className='text-center' style={{ marginTop: "70px" }}>News Monkey Top {this.capitalizeFirstLetter(this.props.category)} Headliness</h2>
                 {this.state.error && <Error mode={this.props.mode} />}
                 {this.state.loader && <Spinner mode={this.props.mode} />}
                 <div className="row my-5" >
