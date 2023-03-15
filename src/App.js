@@ -15,7 +15,7 @@ export default class App extends Component {
     }
   }
   toogleBtn = () => {
-    if (this.state.mode == 'light') {
+    if (this.state.mode === 'light') {
       this.setState({
         mode: 'dark'
       })
