@@ -55,7 +55,7 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    this.updateNews(1);
+    await this.updateNews(1);
   }
 
   handlePrevious = async () => {
