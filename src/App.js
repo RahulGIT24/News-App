@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from './Components/Navbar'
 import News from './Components/News'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LoadingBar from 'react-top-loading-bar'
 
 //* Class based component
@@ -45,7 +45,7 @@ export default class App extends Component {
           progress={this.state.progress}
         />
         <Routes>
-          <Route exact path="/News-App/" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="home" pageSize={this.pageSize} mode={this.state.mode} />} />
+          <Route exact path="/" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key="home" pageSize={this.pageSize} mode={this.state.mode} />} />
           <Route exact path="/sports" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key='sports' category='sports' pageSize={this.pageSize} mode={this.state.mode} />} />
           <Route exact path="/business" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key='business' category='business' pageSize={this.pageSize} mode={this.state.mode} />} />
           <Route exact path="/entertainment" element={<News apiKey={this.apiKey} setProgress={this.setProgress} key='entertainment' category='entertainment' pageSize={this.pageSize} mode={this.state.mode} />} />
